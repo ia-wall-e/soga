@@ -1,0 +1,7 @@
+{
+  "name": "soga-admin",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
