@@ -1,7 +1,9 @@
 /* To learn more about this file see: https://angular.io/config/tsconfig. */
+/*"allowSyntheticDefaultImports": true,: se incluyo para permitir la importacion  de pouchDB en database.service */
 {
   "compileOnSave": false,
   "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
     "baseUrl": "./",
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,

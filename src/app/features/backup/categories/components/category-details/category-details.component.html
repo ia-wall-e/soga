@@ -1,0 +1,120 @@
+<div class="container pdd-x-2 pdd-y-2 gap-3">
+  <app-head class="title-container" title="Category Details"></app-head>
+  <!-- # buttons top -->
+  <div class="modulo">
+    <div class="body-modulo">
+      <div class="buttons-section-common button-inline">
+        <ion-button class="bt-io size-m txt-sz-s">Edit Category</ion-button>
+        <ion-button class="bt-io size-m txt-sz-s fill-outline-primary">Add Subcategory</ion-button>
+      </div>
+    </div>
+  </div>
+   <!-- # box-overview main-->
+  <div class="modulo">
+    <div class="body-modulo">
+      <div class="box-overview-component">
+        <ion-icon name="add-outline"></ion-icon>
+        <span class="text-primary">CATEGORY</span>
+        <span class="text-main">Tecnologia</span>
+        <span class="text-secondary">
+          Electronics Device and accesories category
+        </span>
+      </div>
+    </div>
+  </div>
+   <!-- # box-overview-->
+  <div class="modulo">
+    <div class="body-modulo custom-box-overview">
+      <div class="box-overview-component">
+        <ion-icon name="add-outline"></ion-icon>
+        <span class="text-primary">PRODUCTS</span>
+        <span class="text-main">15</span>
+        <span class="text-secondary">
+          Total products
+        </span>
+      </div>
+      <div class="box-overview-component">
+        <ion-icon name="add-outline"></ion-icon>
+        <span class="text-primary">STRUCTURE</span>
+        <span class="text-main">4</span>
+        <span class="text-secondary">
+          Subcategories
+        </span>
+      </div>
+      <div class="box-overview-component">
+        <ion-icon name="add-outline"></ion-icon>
+        <span class="text-primary">STATUS</span>
+        <span class="text-main">Active</span>
+        <span class="text-secondary">
+          Last Update
+        </span>
+      </div>
+    </div>
+  </div>
+   <!-- # subcategories-->
+  <div class="modulo">
+    <div class="head-modulo">
+      <app-head title="Subcategories" heading="3"></app-head>
+    </div>
+    <div class="body-modulo">
+      <ion-list lines="none">
+        <ion-item>
+          <ion-icon class="icon-primary" aria-hidden="true" name="reorder-three-outline" slot="start"></ion-icon>
+          <ion-label>
+            <h3>Computers</h3>
+            <p>Parent: Tecnologia | children: 5</p>
+          </ion-label>
+          <ion-button class="bt-icon size-m fill-clear">
+            <ion-icon name="settings-outline"></ion-icon>
+          </ion-button>
+          <!-- <ion-button class="bt-icon size-s fill-clear">
+            <ion-icon name="eye-outline"></ion-icon>
+          </ion-button> -->
+          <ion-toggle slot="end"> </ion-toggle>
+        </ion-item>
+        <ion-item>
+          <ion-icon class="icon-primary" aria-hidden="true" name="star-outline" slot="start"></ion-icon>
+          <ion-label>
+            <h3>Feature Category</h3>
+            <p>Highlight on dashboard and listings</p>
+          </ion-label>
+          <ion-toggle slot="end"> </ion-toggle>
+        </ion-item>
+      </ion-list>
+    </div>
+  </div>
+   <!-- # Mmetada-->
+  <div class="modulo">
+    <div class="head-modulo">
+      <app-head title="Category Metadata" heading="3"></app-head>
+    </div>
+    <div class="body-modulo">
+      <ion-list>
+        <ion-item>
+          <ion-icon aria-hidden="true" name="bookmarks-outline" slot="start"></ion-icon>
+          <ion-label>Category ID</ion-label>
+          <ion-label>16 subcategories</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-icon aria-hidden="true" name="calendar-outline" slot="start"></ion-icon>
+          <ion-label>Create Date</ion-label>
+          <ion-label>16 subcategories</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-icon aria-hidden="true" name="person-outline" slot="start"></ion-icon>
+          <ion-label>Created By</ion-label>
+          <ion-label>Bluetooth</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-icon aria-hidden="true" name="eye-outline" slot="start"></ion-icon>
+          <ion-label>Status</ion-label>
+          <ion-label>Public</ion-label>
+        </ion-item>
+      </ion-list>
+      <div class="buttons-section-common button-inline">
+        <!-- <ion-button class="bt-io size-m txt-sz-m expand-content">add new category</ion-button> -->
+        <ion-button class="bt-io fill-outline-primary size-m txt-sz-m  expand-content">Back</ion-button>
+      </div>
+    </div>
+  </div>
+</div>

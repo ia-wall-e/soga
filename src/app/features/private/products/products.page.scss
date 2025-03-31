@@ -1,0 +1,40 @@
+@use "/src/assets/scss/mixin" as mixin;
+ion-content {
+  background: var(--gray-ii);
+}
+.container {
+  .modulo-auth {
+    width: 100%;
+    max-width: 520px;
+    // height: fit-content;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: auto;
+    .body-modulo {
+      width: 100%;
+      // max-width: 420px;
+      display: flex;
+      flex: 1;
+      flex-direction: column;
+      justify-content: center;
+
+      .head-component {
+        padding: 0.625rem;
+
+        .title-section {
+          width: 100%;
+
+          .title {
+            @include mixin.font-title-2($fs: 2rem);
+          }
+
+          .subtitle > a {
+            cursor: pointer;
+            font-weight: 600;
+          }
+        }
+      }
+    }
+  }
+}

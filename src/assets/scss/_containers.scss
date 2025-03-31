@@ -1,0 +1,89 @@
+@use "./mixin" as mixin;
+//#region - Structure
+.container {
+  display: grid;
+  margin: 0 auto;
+  min-width: 375px;
+  
+}
+//#endregion
+//#region - Attributes
+.container {
+  &.gap {
+    &-0 {
+      row-gap: 0;
+      column-gap: 0;
+    }
+    &-1 {
+      row-gap: 0.3125rem;
+      column-gap: 0.3125rem;
+    }
+    &-2 {
+      row-gap: 0.625rem;
+      column-gap: 0.625rem;
+    }
+    &-3 {
+      row-gap: 1.25rem;
+      column-gap: 1.25rem;
+    }
+  }
+  &.pdd-y {
+    &-1 {
+      padding-top: 0.625rem;
+      padding-bottom: 0.625rem;
+    }
+    &-2 {
+      padding-top: 1.25rem;
+      padding-bottom: 1.25rem;
+    }
+  }
+  &.pdd-x {
+    &-1 {
+      padding-right: 0.625rem;
+      padding-left: 0.625rem;
+    }
+    &-2 {
+      padding-right: 1.25rem;
+      padding-left: 1.25rem;
+    }
+  }
+  &.mrg {
+    &-0 {
+      margin: 0;
+    }
+    &-1 {
+      margin: 0.625rem 0;
+    }
+    &-2 {
+      margin: 1.25rem 0;
+    }
+  }
+  &.bg {
+    &-gray {
+      background: var(--gray-xsoft);
+    }
+    &-white {
+      background: var(--white-regular);
+    }
+  }
+  &.grid-1 {
+    grid-template-columns: 100%;
+    grid-template-rows: auto auto;
+  }
+}
+//#endregion
+//#region - implements
+.container {
+  &.implement {
+    &-full{ 
+      height:100%;
+    }
+  }
+}
+//#endregion
+//! Respnsive
+@include mixin.mediaquery(452px) {
+  .container {
+    --pdd-lateral: 0.625rem;
+  }
+}

@@ -1,2 +1,108 @@
 // For information on how to create your own theme, please see:
 // http://ionicframework.com/docs/theming/
+:root {
+    //#region - Palettes
+    //*Ionic
+    --ion-background-color: rgb(255, 255, 255);
+    --ion-color-primary: rgb(35, 118, 241);
+    --ion-color-warning: rgb(236, 91, 98);
+  
+    --bg-item-common: var(--white-regular);
+    --background-secondary: rgb(240, 243, 245);
+    --background-dark-primary: #1e1f20;
+    --text-color-black: var(var(--black-regular));
+  
+    --bg-card-modulo: var(--bg-item-common);
+    --bg-card: var(--bg-item-common);
+    --bg-modulo-primary: var(--bg-item-common);
+    --bg-card-main: var(--bg-item-common);
+    //*color-regular
+    --black-regular: rgb(34, 37, 41);
+    // --black-regular: rgb(48, 48, 48);
+    --white-regular: white;
+    //*gray
+    --gray-xsoft: rgb(243, 243, 243); //
+    --gray-soft: rgb(250, 250, 250); //
+    --gray-i: rgb(241, 244, 246); //inputs(bg-bd) - buttons(bg)
+    --gray-iv: rgb(
+      240,
+      243,
+      245
+    ); //modulo(background) - button(background)//a4a4a4
+    // --gray-iv:#a4a4a4;
+    --gray-old: rgb(155, 155, 155); //old
+    --gray-ii: rgb(131, 142, 157); // inputs(label) -search
+    --gray-txt: rgb(131, 142, 157);
+    --gray-iii: rgb(126, 137, 153); //headline(subtitle)
+    //#endregion
+    //#region - Base
+    //*font-size
+    --ft-sz-xxxl: 2rem;
+    --ft-sz-xl: 1rem;
+    --ft-sz-l: 0.9rem;
+    --ft-sz-m: 0.85rem;
+    --ft-sz-s: 0.8rem;
+    //*Padding
+    --pdd-xl: 2rem;
+    --pdd-l: 1.25rem;
+    --pdd-m: 0.625rem;
+    --pdd-s: 0.3125rem;
+    --pdd-4: 2rem;
+    --pdd-3: 1.25rem;
+    --pdd-2: 0.625rem;
+    --pdd-1: 0.3125rem;
+    //*radius
+    --radius-square: 8px;
+    --radius-1: 12px; //cards
+    --radius-2: 20px; //modulos
+    --radius-3: 30px; //inputs-buttons
+    //*size (Buttons-inputs)
+    --size-xl: 3.5rem;
+    --size-l: 3rem;
+    --size-m: 2.5rem;
+    --size-s: 2rem;
+    //*Fonts- Mixin
+    --mx-button-font: "open-sans", sans-serif;
+    --mx-button-standar: "open-sans", sans-serif;
+    --mx-input-family: "open-sans", sans-serif;
+    // --mx-input-family:"ubuntu-sans";
+    // --mx-button-standar: "roboto";
+    --font-title-primary: "roboto";
+    --font-title-secondary: "ubuntu-sans";
+    //#endregion
+    //#region - COMMONS
+    /***** Color *****/
+    --txt-color-second: var(--gray-ii);
+    /***** Radius *****/
+    --rd-primary: 8px;
+    --rd-image: var(--rd-primary);
+    --rd-image-stand: var(--rd-primary);
+    --rd-card-basic: var(--rd-primary);
+    --rd-card-product: var(--rd-primary);
+    --rd-card-item: var(--rd-primary);
+    --rd-card-light: var(--rd-primary);
+    --rd-card-main: var(--rd-primary);
+    --rd-card-modulo: var(--rd-primary);
+    --rd-modulo: var(--rd-primary);
+    --rd-showcase-page: var(--rd-primary);
+    --rd-modal: var(--rd-primary);
+    --radius-sk: 30px;
+    /***** background *****/
+    --bg-image: var(--gray-xsoft);
+    --bg-second: var(--gray-i);
+    //#endregion
+    /***Background***/
+    --bg-primary: white;
+    --bg-3: rgb(243, 243, 243);
+    /***Fonts***/
+    --mx-button-font: "open-sans", sans-serif;
+    --mx-button-standar: "open-sans", sans-serif;
+    --mx-input-family: "open-sans", sans-serif;
+    // --mx-input-family:"ubuntu-sans";
+    // --mx-button-standar: "roboto";
+    --font-title-primary: "roboto";
+    --font-title-secondary: "ubuntu-sans";
+    /***Background Components***/
+    --bg-image: var(--bg-3);
+  }
+  

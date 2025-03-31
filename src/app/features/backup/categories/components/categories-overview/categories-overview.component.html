@@ -1,0 +1,69 @@
+<div class="container pdd-x-2 pdd-y-2 gap-3">
+  <!-- #search -->
+  <div class="modulo">
+    <div class="head-modulo">
+      <app-head title="All Categories" heading="2"></app-head>
+    </div>
+    <div class="body-modulo custom-search-button">
+      <div class="search-section">
+        <div class="input-component fill-solid">
+          <input type="text">
+          <label>Search Category</label>
+        </div>
+      </div>
+      <div class="buttons-section-common button-double">
+        <ion-button class="bt-io size-m txt-sz-l expand-content">Add New Category</ion-button>
+      </div>
+    </div>
+  </div>
+  <!-- #items -->
+  <div class="modulo">
+    <div class="body-modulo">
+      <div class="segment-section">
+        <ion-segment value="default">
+          <ion-segment-button value="default">
+            <ion-label>Todas</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="active">
+            <ion-label>Active</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="inactive">
+            <ion-label>Inactive</ion-label>
+          </ion-segment-button>
+        </ion-segment>
+      </div>
+      <div class="items-section">
+        <ion-list>
+          <ion-item>
+            <ion-icon aria-hidden="true" name="airplane" slot="start"></ion-icon>
+            <ion-label>Electronics</ion-label>
+            <ion-label>16 nodes</ion-label>
+            <ion-label>Active</ion-label>
+            <ion-button class="bt-icon size-s fill-clear" >
+              <ion-icon name="hammer-outline"></ion-icon>
+            </ion-button>
+            <ion-button class="bt-icon size-s fill-clear" slot="end">
+              <ion-icon name="eye-outline"></ion-icon>
+            </ion-button>
+          </ion-item>
+          <ion-item>
+            <ion-icon aria-hidden="true" name="wifi" slot="start"></ion-icon>
+            <ion-label>Wi-Fi</ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-icon aria-hidden="true" name="bluetooth" slot="start"></ion-icon>
+            <ion-label>Bluetooth</ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-icon aria-hidden="true" name="call" slot="start"></ion-icon>
+            <ion-label>Cellular</ion-label>
+          </ion-item>
+        </ion-list>
+      </div>
+      <div class="buttons-section-common button-double">
+        <ion-button class="bt-io fill-outline-primary size-m txt-sz-l">Load More</ion-button>
+        <span>showing 6 of 23 categories</span>
+      </div>
+    </div>
+  </div>
+</div>

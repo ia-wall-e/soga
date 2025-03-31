@@ -1,0 +1,84 @@
+<!-- <ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      Nuevo Producto
+    </ion-title>
+  </ion-toolbar>
+</ion-header> -->
+
+<ion-content [fullscreen]="true">
+  <div class="container bg-gray implement-full">
+    <div class="modulo type-card modulo-auth">
+      <div class="body-modulo">
+        <form class="form-io" [formGroup]="newProductFm" (ngSubmit)="createProduct(newProductFm)">
+          <fieldset *ngIf="step==1">
+            <div class="head-form">
+              <app-head title="Titulo de tu publicación" subtitle="" heading="3"></app-head>
+            </div>
+            <div class="body-form">
+              <div class="inputs-group">
+                <div class="input-component fill-line size-xl  label-static ">
+                  <input type="text" formControlName="title" />
+                </div>
+                <div class="buttons-section-common button-double">
+                  <ion-button class="bt-io fill-outline-primary size-m txt-sz-l expand-content"
+                    (click)="nextStep()">Continuar</ion-button>
+                </div>
+              </div>
+            </div>
+          </fieldset>
+          <fieldset *ngIf="step==2">
+            <div class="head-form">
+              <app-head title="Selecciona la categoria de tu producto" subtitle="" heading="3"></app-head>
+            </div>
+            <div class="body-form">
+              <div class="inputs-group">
+                <ion-breadcrumbs>
+                  <ion-breadcrumb href="#home">
+                    Home
+                    <ion-icon slot="separator" name="chevron-forward-outline"></ion-icon>
+                  </ion-breadcrumb>
+                  <ion-breadcrumb href="#electronics">
+                    Electronics
+                    <ion-icon slot="separator" name="chevron-forward-outline"></ion-icon>
+                  </ion-breadcrumb>
+                  <ion-breadcrumb href="#cameras">
+                    Cameras
+                    <ion-icon slot="separator" name="chevron-forward-outline"></ion-icon>
+                  </ion-breadcrumb>
+                  <ion-breadcrumb href="#film">
+                    Film
+                    <ion-icon slot="separator" name="chevron-forward-outline"></ion-icon>
+                  </ion-breadcrumb>
+                </ion-breadcrumbs>
+                <div class="buttons-section-common button-double">
+                  <ion-button class="bt-io fill-outline-primary size-m txt-sz-l expand-content"
+                    (click)="nextStep()">Continuar</ion-button>
+                  <ion-button class="bt-io fill-clear size-m txt-sz-l expand-content txt-color-primary" (click)="openModalCat(true)">Seleccionar
+                    categoria</ion-button>
+                </div>
+              </div>
+
+            </div>
+          </fieldset>
+        </form>
+      </div>
+    </div>
+  </div>
+  <!-- #region Modal categories -->
+<ion-modal [isOpen]="isModalOpen">
+  <ng-template>
+    <ion-header>
+      <ion-toolbar>
+        <ion-buttons slot="start">
+          <ion-button (click)="openModalCat(false)">Cancel</ion-button>
+        </ion-buttons>
+        <!-- <ion-title>Selecciona una categoria</ion-title> -->
+      </ion-toolbar>
+    </ion-header>
+    <ion-content class="ion-padding">
+    </ion-content>
+  </ng-template>
+</ion-modal>
+<!-- #endregion -->
+</ion-content>

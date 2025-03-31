@@ -1,0 +1,403 @@
+@use "./mixin" as mixin;
+
+//#region - VARIABLES
+.bt-io,
+.bt-icon {
+  --btn-solid-second-bg: var(--gray-i);
+  --btn-solid-second-cl: var(--black-regular);
+  --btn-solid-graysoft: var(--gray-ii);
+  --btn-rd-rounded: 30px;
+  --btn-rd-squared: 8px;
+  --btn-pdd: 0 var(--pdd-l);
+}
+
+//#endregion
+//#region - EXTENDS
+%fill {
+  &.fill {
+    &-solid {
+      &-primary {
+        background: var(--ion-color-primary);
+      }
+      &-xprimary {
+        color: var(--ion-color-primary);
+        --background: rgb(207,223,244);
+      }
+      &-secondary {
+        --background: var(--btn-solid-second-bg);
+        color: var(--btn-solid-second-cl);
+      }
+      &-warning {
+        --background: var(--ion-color-warning);
+        --color: var(--white-regular);
+      }
+      &-black {
+        --background: var(--black-regular);
+        --color: var(--white-regular);
+      }
+      &-white {
+        --background: white;
+        color: var(--ion-color-primary);
+      }
+      &-gray {
+        --background: var(--btn-solid-second-bg);
+        --color: var(--btn-solid-second-cl);
+      }
+      &-soft {
+        --background: var(--btn-solid-second-bg);
+        --color: var(--btn-solid-graysoft);
+      }
+      &-xsoft {
+        --background: var(--gray-soft);
+        --color: var(--btn-solid-graysoft);
+      }
+    }
+
+    &-outline {
+      &-primary {
+        --background: none;
+        color: var(--ion-color-primary);
+        border: 2px solid var(--ion-color-primary);
+        fill: var(--ion-color-primary);
+      }
+
+      &-warning {
+        --background: none;
+        color: var(--ion-color-warning);
+        border: 2px solid var(--ion-color-warning);
+        fill: var(--ion-color-warning);
+      }
+
+      &-black {
+        --background: none;
+        color: var(--black-regular);
+        border: 2px solid var(--black-regular);
+      }
+      &-gray {
+        --background: none;
+        color: var(--gray-ii);
+        border: 2px solid var(--gray-ii);
+      }
+    }
+
+    &-clear {
+      background: none;
+      --background: none;
+      --color: var(--text-color-black);
+      color: var(--text-color-black);
+    }
+  }
+}
+
+%shape {
+  &.shape {
+    &-rounded {
+      --border-radius: var(--btn-rd-rounded);
+      border-radius: var(--btn-rd-rounded);
+    }
+    &-squared {
+      --border-radius: var(--btn-rd-squeared);
+      border-radius: var(--btn-rd-squeared);
+    }
+  }
+}
+
+%font {
+  &.txt {
+    &-sz {
+      &-xxxl {
+        font-size: var(--ft-sz-xxxl);
+      }
+
+      &-xl {
+        background: #000;
+        font-size: var(--ft-sz-xl);
+      }
+
+      &-l {
+        font-size: var(--ft-sz-l);
+      }
+
+      &-m {
+        font-size: var(--ft-sz-m);
+      }
+
+      &-s {
+        font-size: var(--ft-sz-s);
+      }
+    }
+
+    &-color {
+      &-primary {
+        color: var(--ion-color-primary);
+      }
+
+      &-warning {
+        color: var(--ion-color-warning);
+      }
+
+      &-gray {
+      }
+    }
+  }
+}
+
+%shadow {
+  &.shadow {
+    --box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px; //6 search;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px; //6 search;
+  }
+}
+%icon {
+  //   background: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  font-size: 1.15rem;
+}
+//#endregion
+//#region - STRUCTURE
+//*structure
+.bt-io {
+  @include mixin.font-button();
+  //   background: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  //+ionic
+  margin: unset;
+  letter-spacing: unset;
+  text-transform: none;
+  border-radius: 8px;
+  --box-shadow: none;
+  &.icon {
+    &-right {
+      span {
+        @extend %icon;
+        margin-left: 0.3125rem;
+      }
+    }
+    &-left {
+      span {
+        @extend %icon;
+        margin-right: 0.3125rem;
+      }
+    }
+  }
+}
+
+//*attibutes
+.bt-io {
+  &.size {
+    &-xl {
+      height: 3.5rem;
+      min-height: 3.5rem;
+      max-height: 3.5rem;
+    }
+
+    &-l {
+      height: 3rem;
+      min-height: 3rem;
+      max-height: 3rem;
+    }
+
+    &-m {
+      height: 2.5rem;
+      min-height: 2.5rem;
+      max-height: 2.5rem;
+    }
+
+    &-s {
+      height: 2rem;
+      min-height: 2rem;
+      max-height: 2rem;
+    }
+  }
+
+  &.expand {
+    &-full {
+      width: 100%;
+    }
+
+    &-regular {
+      width: min(18.75rem, 18.75rem);
+    }
+
+    &-content {
+      width: fit-content;
+    }
+  }
+
+  @extend %fill;
+  @extend %shape;
+  @extend %shadow;
+  @extend %font;
+}
+
+//#endregion
+//#region - BUTTON-ICON
+//* - STRUCTURE
+.bt-icon {
+  border: none;
+  height: min(var(--size-l), var(--size-l));
+  width: min(var(--size-l), var(--size-l));
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 100%; //no borrar
+  //ionic
+  --border-radius: 100%;
+  --box-shadow: none;
+
+  .icon {
+    font-weight: 200;
+  }
+}
+
+//* - ATTRIBUTES
+.bt-icon {
+  &.size {
+    &-xl {
+      width: 3.5rem;
+      min-width: 3.5rem;
+      max-width: 3.5rem;
+      height: 3.5rem;
+      min-height: 3.5rem;
+      max-height: 3.5rem;
+    }
+
+    &-l {
+      width: 3rem;
+      min-width: 3rem;
+      max-width: 3rem;
+      height: 3rem;
+      min-height: 3rem;
+      max-height: 3rem;
+
+      img {
+        width: calc(var(--size-l) - var(--pdd-m));
+        height: calc(var(--size-l) - var(--pdd-m));
+      }
+    }
+
+    &-m {
+      width: 2.5rem;
+      min-width: 2.5rem;
+      max-width: 2.5rem;
+      height: 2.5rem;
+      min-height: 2.5rem;
+      max-height: 2.5rem;
+      // width:minmax(2.5rem , 2.5rem);
+      // height:minmax(2.5rem , 2.5rem);
+    }
+
+    &-s {
+      // width:;
+      // min-width:;
+      // max-width:;
+      width: 2rem;
+      min-width: 2rem;
+      max-width: 2rem;
+      height: 2rem;
+      min-height: 2rem;
+      max-height: 2rem;
+      // width:minmax(2rem , 2rem);
+      // height:minmax(2rem , 2rem);
+    }
+  }
+
+  //se comento para ver si es funcional
+  // &.icon-size {
+  //     &-xl {
+  //         .icon {
+  //             font-size: 2.5rem;
+  //         }
+  //     }
+  // }
+
+  @extend %fill;
+  @extend %shape;
+  @extend %shadow;
+  @extend %font;
+}
+
+//#endregion
+//#region - BUTTONS custom-style (adaptados)
+//*legendados
+.button-legend {
+  //   background: #ff9a9a;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  // width:2rem;
+  // max-width:2rem;
+  // min-width:2rem;
+  height: 5.3rem;
+  transition: color 0.3s ease;
+
+  &:hover {
+    .legend {
+      color: black;
+    }
+  }
+
+  > .bt-icon {
+    // --background-hover: var(--black-regular);
+    // --background-hover-opacity: 1;
+    // --color-hover: var(--white-regular)
+    border: 1px solid black;
+  }
+
+  .legend {
+    width: 4.3rem;
+    max-width: 4.3rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    @include mixin.font-standar(
+      $fs: 0.85rem,
+      $fw: 300,
+      $color: var(--black-regular)
+    );
+    transition: border 0.3s ease, color 0.3s ease;
+    display: flex;
+    justify-content: center;
+  }
+}
+
+//*multiLine
+.bt-io {
+  &.multiline {
+    --padding-bottom: 0;
+    --padding-top: 0;
+
+    .wrapper-txt {
+      // background: violet;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+
+      .line-primary {
+        font-size: 0.8rem;
+        font-weight: 300;
+        @include mixin.txt-ellipsis;
+        height: 18px;
+      }
+
+      .line-secondary {
+        font-size: 0.85rem;
+        height: 15px;
+        @include mixin.txt-ellipsis;
+      }
+    }
+  }
+}
+
+//#endregion

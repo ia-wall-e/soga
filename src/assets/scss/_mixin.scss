@@ -1,0 +1,141 @@
+
+@use "./fonts";
+
+//#region - FONTS
+@mixin font-title($heading:"", $fs: 1rem, $fw: 700, $color: var(--black-regular)) {
+  font-family: var(--font-title-primary);
+  font-size: $fs;
+  font-weight: $fw;
+  color: $color;
+
+  @if($heading==1) {
+    font-size: 1.5rem;
+  }
+
+  @else if ($heading==2) {
+    // font-size: 1.25rem;
+    font-size: 1.375rem;
+  }
+
+  @else if ($heading==3) {
+    font-size: 1.125rem;
+  }
+
+  @else if($heading=="text") {
+    font-size: 0.8rem;
+    font-weight: 400;
+  }
+}
+@mixin font-title-2($heading: "", $fs: "", $fw: 700, $color: var(--black-regular)) {
+  font-family: var(--font-title-secondary);
+  font-size: $fs;
+  font-weight: $fw;
+  color: $color;
+
+  @if($heading==1) {
+    font-size: 1.5rem;
+  }
+
+  @else if ($heading==2) {
+    // font-size: 1.25rem;
+    font-size: 1.375rem;
+  }
+
+  @else if ($heading==3) {
+    font-size: 1.125rem;
+  }
+
+  @else if($heading=="text") {
+    font-size: 0.8rem;
+    font-weight: 400;
+  }
+
+}
+@mixin font-standar($type: "", $color: var(--black-regular), $fs: 0.875rem, $fw: 400) {
+  font-family: var(--mx-button-standar);
+ 
+  font-size: $fs;
+  font-weight: $fw;
+  color: $color;
+  --color: $color;
+
+  @if($type=="price") {
+    font-size: 1.2rem;
+    font-weight: 600;
+    font-family: var(--mx-button-standar);
+  }
+  @else if($type=="card") {
+    // font-family: var(--font-title-secondary);
+    // font-family: var(--font-title-primary);
+    font-size: 0.85rem;
+    font-weight: 400;
+  }
+  @else if($type=="input") {
+    font-size: 0.95rem;
+    font-weight: 500;
+  }
+}
+
+@mixin font-button($fs: 1rem, $fw: 600, $color: '') {
+  font-family: var(--mx-button-font);
+  font-size: $fs;
+  font-weight: $fw;
+  color: $color;
+}
+
+@mixin font-input($color: var(--black-regular), $fs: 0.875rem, $fw: 400) {
+  font-family: var(--mx-input-family);
+  --font-family: var(--mx-input-family);
+  font-size: $fs;
+  font-weight: $fw;
+  color: $color;
+  --color: $color;
+}
+
+;
+
+//#endregion
+//#region - UTILS
+@mixin txt-ellipsis {
+  overflow: hidden;
+  white-space: nowrap;
+  // text-overflow: ellipsis;
+}
+
+@mixin mediaquery($size) {
+  @media screen and (max-width:#{$size}) {
+    @content;
+  }
+}
+@mixin custom-scroll{
+  /* Mostrar una barra de desplazamiento personalizada */
+::-webkit-scrollbar {
+  width: 5px; /* Ancho de la barra */
+}
+
+/* Estilos para el track (fondo de la barra) */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Estilos para el thumb (parte que se desplaza) */
+::-webkit-scrollbar-thumb {
+  background: #c0c0c0;
+  border-radius: 10px;
+}
+}
+//#endregion
+
+//#region
+// !Codigo de ayuda
+/*
+AJUSTAR TEXTO DENTRO DE UN CONTENEDOR DANDOLE UN LIMITE DE LINEAS
+ display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-height: calc(2 * 1.2em); //* Ajusta el valor según el tamaño de la fuente 
+      line-height: 1.2em; //* Ajusta el valor según el tamaño de la fuente
+*/
+//#endregion
