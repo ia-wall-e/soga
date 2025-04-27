@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { DatabaseService } from './database.service';
 import { BehaviorSubject } from 'rxjs';
+import { HttpParams } from '@angular/common/http';
+import { ICategoryData } from 'src/app/features/private/categories/utils/category-interface';
 
 @Injectable({
   providedIn: 'root'
@@ -11,18 +13,17 @@ export class CategoriesProductsService {
   constructor(private dbSvc: DatabaseService) {
     this.dbSvc.connectDataBase('categories-products')
   }
-  //#API
-  newCategory(data: any) {
+  //#Crud
+  putRoot(data: any) {
     const date = new Date().toISOString();
     const update = { _id: data.name, date: date, type: 'create', user: 'admin-1233', info: null };
     if (data === "") throw new Error("Ingresa una categoria");
     const doc = {
-      _id: data.name,
-      category: data.name,
+      _id: `root:${data.name}`,
       label: data.name,
-      description:data.description || null,
-      type: 'root',
-      nivel: 1,
+      description: data.description || null,
+      type: 'category',
+      level: 1,
       nodes: 0,
       status: data.status,
       display: data.display,
@@ -30,38 +31,49 @@ export class CategoriesProductsService {
       icon: data.icon,
       metadata: {
         createDate: update,
-        update: update,
+        lastUpdate: update,
       }
     }
     this.dbSvc.putDocument(doc);
   }
-  getCategory(id: string) {
+  putNode(data: any, categoryData:ICategoryData) {
+    try {
+      console.log(categoryData);
+      if (!categoryData.parentID) throw new Error("Se ha presentado un problema con el parent del nodo")
+      if (!categoryData.parentLevel) throw new Error("Se ha producido un error con los niveles del nodo");
+      const date = new Date().toISOString();
+      const update = { _id: data.name, date: date, type: 'create', user: 'admin-1233', info: null };
+      let parentLevel = categoryData.parentLevel+1;
+      console.log(parentLevel)
+      const doc = {
+        _id: `node:${data.id}`,
+        type: 'category',
+        level: parentLevel,
+        label: data.name,
+        nodes: 0,
+        status: data.status,
+        description: data.description,
+        parent_id: categoryData.parentID,
+        metadata: {
+          createDate: update,
+          lastUpdate: update,
+        }
+      }
+      this.dbSvc.putDocument(doc)
+    } catch (e) { console.error(e) }
+
+  }
+  getRoot(id: any) {
     return this.dbSvc.getDocument(id)
+  }
+  getNodes(id: any) {
+    return this.dbSvc.getByQuery(`categorias/nodos?key="${id}"`)?.then((r) => {
+      // console.log(r);
+      return r?.rows
+    })
   }
   getOverview() {
     return this.dbSvc.getByQuery('categorias/overview?descending=true&limit=10')?.then((x: any) => { return x }).catch((e: any) => console.log(e))
-  }
-  newSubCategory(subCategObj: any, category: any) {
-    if (category && category.length < 0) throw new Error('Se presento un problema con la categoria superior');
-    if (Object.keys(subCategObj).length < 0) throw new Error('Debes ingresar la subcategoria y su etiqueta');
-    // console.log(subCategObj)
-    const subcategory = subCategObj.subcategory;
-    const label_ = subCategObj.label;
-    // console.log(subcategory)
-    // console.log(label_)
-    const doc = {
-      subcategory: subcategory,
-      type: 'subcategory',
-      nivel: 2,
-      label: label_,
-      parent_id: category
-    }
-    // this.db?.post(doc)
-  }
-  //# comunicacion entre componentes
-  setCategory(source: string) {
-    console.log(source)
-    // this.categorySource.next(source);
   }
   //#design
   createQuery(desigDoc: any) {

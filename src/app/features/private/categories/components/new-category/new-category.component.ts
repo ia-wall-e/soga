@@ -24,8 +24,7 @@ export class NewCategoryComponent implements OnInit {
   ngOnInit() { }
   //#
   onSubmit(fm:FormGroup){
-    this.categorySvc.newCategory(fm.value)
-  
+    this.categorySvc.putRoot(fm.value)
   }
   //#
   toggleStatus(event: any) {

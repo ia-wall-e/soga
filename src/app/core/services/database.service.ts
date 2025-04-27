@@ -40,6 +40,7 @@ export class DatabaseService {
     return this.db?.put(desigDoc)
   }
   getByQuery(patch: string) {
+    // console.log(patch)
     return this.db?.query(patch, {})
       .then(response => {
         return response;

@@ -31,22 +31,23 @@
       </div>
       <div class="body-modulo">
         <ion-list lines="none">
-          <ion-item button>
+          <!-- **select icon** -->
+          <!--  <ion-item button>
             <ion-icon class="icon-primary" aria-hidden="true" name="apps-outline" slot="start"></ion-icon>
             <ion-label>
               <h3>Category Icon</h3>
               <p>Choosen an icon for this category</p>
             </ion-label>
-           
-          </ion-item>
-          <ion-item button>
+          </ion-item> -->
+          <!-- **select icon** -->
+          <!-- <ion-item button>
             <ion-icon class="icon-primary" aria-hidden="true" name="image-outline" slot="start"></ion-icon>
             <ion-label>
               <h3>Select Image</h3>
               <p>Choosen an image for this category</p>
             </ion-label>
             <ion-icon aria-hidden="true" name="cloud-outline" slot="end"></ion-icon>
-          </ion-item>
+          </ion-item>  -->
           <ion-item>
             <ion-icon class="icon-primary" aria-hidden="true" name="toggle-outline" slot="start"></ion-icon>
             <ion-toggle (ionChange)="toggleStatus($event)" [checked]="newCategoryFm.get('status')?.value"
@@ -56,7 +57,8 @@
                 <p>Category will be visible to users</p>
               </ion-label></ion-toggle>
           </ion-item>
-          <ion-item>
+          <!-- **select parent category** -->
+          <!-- <ion-item>
             <ion-icon class="icon-primary" aria-hidden="true" name="folder-outline" slot="start"></ion-icon>
             <ion-label>
               <h3>Parent Category</h3>
@@ -67,7 +69,7 @@
               <ion-select-option value="banana">Banana</ion-select-option>
               <ion-select-option value="orange">Orange</ion-select-option>
             </ion-select>
-          </ion-item>
+          </ion-item> -->
         </ion-list>
       </div>
     </div>
@@ -109,6 +111,5 @@
       </div>
     </div>
   </form>
-
 </div>
 <!-- {{newCategoryFm.value | json}} -->
