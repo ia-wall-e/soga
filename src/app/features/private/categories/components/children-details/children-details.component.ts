@@ -1,4 +1,4 @@
-import { Component, CUSTOM_ELEMENTS_SCHEMA, Inject, Injector, OnInit } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { CategoriesProductsService } from 'src/app/core/services/categories-products.service';
 import { NavigationService } from 'src/app/shared/utils/services/navigation.service';
 import { WidgetsModule } from 'src/app/shared/widgets/widgets.module';
@@ -10,23 +10,25 @@ import { ICategoryData } from '../../utils/category-interface';
   imports: [WidgetsModule],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
-export class ChildrenDetailsComponent implements OnInit {
+export class ChildrenDetailsComponent implements OnInit,OnChanges {
+  // @Input() data: any;
   categoryData?: ICategoryData;
-  childID?: string;
+  childID?:string;
   item?: any;
   nodes: any;
-  injectorCustom?: Injector; 
-  constructor(@Inject('componentData') public componentData: ICategoryData,private injector:Injector, private categorySvc: CategoriesProductsService, private navSvc: NavigationService) { }
+  constructor(private categorySvc: CategoriesProductsService, private navSvc: NavigationService) { }
 
   ngOnInit() {
     this.categoryData = this.navSvc.getCurrentNavigation().data;
     // console.log(this.categoryData)
-    console.log(this.componentData)
     this.handlerData()
   }
-
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['categoryData']) {
+      console.log('Componentchanged');
+    }
+  }
   handlerData() {
-    // console.log(this.componentData)
     this.childID = this.categoryData?.childID;
     this.categorySvc.getRoot(this.childID)?.then((r) => {
       // console.log(r);
@@ -37,38 +39,25 @@ export class ChildrenDetailsComponent implements OnInit {
       // console.log(this.nodes)
     })
   }
-  childComponentInjector(data: ICategoryData) {
-    return Injector.create({
-      providers: [{ provide: 'componentData', useValue: data }],
-      parent: this.injector
-    })
-  }
   onNavigation(componentID: string, data?: any) {
     const parentId = this.item._id;
     const levelParent = this.item.level;
-    const childID = this.childID;
+    const childID= this.childID;
     if (componentID == "nodeDetails") {
-      this.componentData = data;
-     this.injectorCustom= this.childComponentInjector(this.componentData)
-      console.log(this.componentData)
-  
-      /*****/
-      // const data_: ICategoryData = {
-      //   parentID: parentId,
-      //   parentLevel: levelParent,
-      //   childID: childID
-      // }
-      // console.log(data, componentID);
-      // this.navSvc.navigateTo(componentID, data_)
+      const data: ICategoryData = {
+        parentID: parentId,
+        parentLevel: levelParent,
+        childID:childID
+      }
+      console.log(data, componentID);
+      this.navSvc.navigateTo(componentID, data)
     } else if (componentID == "newSubcategory") {
-
-      /******/
-      const data_: ICategoryData = {
+      const data: ICategoryData = {
         parentID: parentId,
         parentLevel: levelParent
       }
-      // console.log(data_);
-      // this.navSvc.navigateTo(componentID, data_)
+      console.log(data);
+      this.navSvc.navigateTo(componentID, data)
     }
 
 

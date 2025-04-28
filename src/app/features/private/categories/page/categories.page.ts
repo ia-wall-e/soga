@@ -1,4 +1,4 @@
-import { Component, Injector,Provider, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 /** */
 import { DashboardComponent } from '../components/dashboard/dashboard.component';
 import { NewCategoryComponent } from '../components/new-category/new-category.component';
@@ -10,7 +10,6 @@ import { EditCategoryComponent } from '../components/edit-category/edit-category
 import { CategoriesProductsService } from 'src/app/core/services/categories-products.service';
 import { NavigationData, NavigationService } from 'src/app/shared/utils/services/navigation.service';
 import { Subscription } from 'rxjs';
-import { ICategoryData } from '../utils/category-interface';
 @Component({
   selector: 'app-categories',
   templateUrl: './categories.page.html',
@@ -20,7 +19,6 @@ import { ICategoryData } from '../utils/category-interface';
 export class CategoriesPage implements OnInit, OnDestroy {
   public folder!: string;
   private navigationSubs!: Subscription;
-  injectorCustom?:Injector;
   currentComponent: any = DashboardComponent;
   currentData?:any;
   currentNav?: string;
@@ -41,7 +39,7 @@ export class CategoriesPage implements OnInit, OnDestroy {
   }
 
   //#endregion
-  constructor(private myInjector: Injector,private categorySvc: CategoriesProductsService, private navigationSvc: NavigationService) { }
+  constructor(private categorySvc: CategoriesProductsService, private navigationSvc: NavigationService) { }
   //#region Hook
   ngOnInit() {
     this.initializeComponent();
@@ -61,13 +59,8 @@ export class CategoriesPage implements OnInit, OnDestroy {
   initializeComponent() {
     this.onLoadComponent('dashboard')
   }
-  onLoadComponent(id: string, data?: ICategoryData | null) {
-    // console.log(data)
-    this.navigationSvc.navigateTo(id, data);
-    this.injectorCustom= Injector.create({
-      providers:[{provide:'componentData',useValue:{name:"Hugo"}}],
-      parent:this.myInjector
-    })
+  onLoadComponent(id: string, data?: any | null) {
+    this.navigationSvc.navigateTo(id, data)
   }
   switchComponents(id_nav: any) {
     switch (id_nav) {

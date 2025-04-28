@@ -25,7 +25,7 @@ export class DashboardComponent implements OnInit {
   getData() {
     this.categorySvc.getOverview()?.then((r: any) => {
       if (r.rows.length > 0) {
-        console.log(r)
+        // console.log(r)
         this.data = r.rows;
         this.totalRows = r.total_rows;
         this.totalProducts= r.rows.reduce((total:number, obj:any)=>{return total + (Number(obj?.products)|| 0),0})
@@ -36,11 +36,7 @@ export class DashboardComponent implements OnInit {
     })
   }
   onNavigation(idComponent: string, categoryData?:ICategoryData) {
-    //***OLD***
     // console.log(data)
-    // this.navigationSvc.navigateTo(idComponent,categoryData)
-    //***NEW***
-
-    this.navigationSvc.navigateTo(idComponent)
+    this.navigationSvc.navigateTo(idComponent,categoryData)
   }
 }
