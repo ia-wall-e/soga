@@ -1,0 +1,85 @@
+<div class="container pdd-x-2 pdd-y-2 gap-3">
+  <app-head class="title-container" title="Crear Categoria" heading="2"></app-head>
+  <form class="form-io custom-form-io" [formGroup]="formData" (ngSubmit)="onSubmit(formData)">
+    <!-- #form -->
+    <div class="modulo">
+      <div class="head-modulo">
+        <app-head title="Informacion Basica" heading="3"></app-head>
+      </div>
+      <div class="body-modulo">
+        <div class="inputs-group">
+          <div class="wrapper-input">
+            <label class="title">Nombre</label>
+            <div class="input-component fill-solid size-xl  label-static ">
+              <input type="text" formControlName="label">
+            </div>
+          </div>
+          <div class="wrapper-input">
+            <label class="title">Descripción</label>
+            <div class="input-component fill-solid">
+              <textarea class="fill-solid" name="comentarios" rows="4" cols="50"
+                formControlName="description"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- #category settings -->
+    <div class="modulo">
+      <div class="head-modulo">
+        <app-head title="Configuración de la Categoria" heading="3"></app-head>
+      </div>
+      <div class="body-modulo">
+        <ion-list lines="none">
+          <ion-item>
+            <ion-icon class="icon-primary" aria-hidden="true" name="eye-outline" slot="start"></ion-icon>
+            <ion-toggle (ionChange)="toggleStatus($event)" [checked]="formData.get('status')?.value"
+              justify="space-between">
+              <ion-label>
+                <h3>Status Active</h3>
+                <p>La categoría es visible para los usuarios</p>
+              </ion-label></ion-toggle>
+          </ion-item>
+        </ion-list>
+      </div>
+    </div>
+    <!-- #display-options -->
+    <div class="modulo">
+      <div class="head-modulo">
+        <app-head title="Display Options" heading="3"></app-head>
+      </div>
+      <div class="body-modulo">
+        <ion-list lines="none">
+          <ion-item>
+            <ion-icon class="icon-primary" aria-hidden="true" name="reorder-three-outline" slot="start"></ion-icon>
+            <ion-toggle (ionChange)="toggleDisplay($event)" [checked]="formData.get('display')?.value"
+              justify="space-between">
+              <ion-label>
+                <h3>Display</h3>
+                <p>Visualización en el menú de navegación principal</p>
+              </ion-label>
+            </ion-toggle>
+          </ion-item>
+          <ion-item>
+            <ion-icon class="icon-primary" aria-hidden="true" name="star-outline" slot="start"></ion-icon>
+            <ion-toggle (ionChange)="toggleHighlight($event)" [checked]="this.formData.get('highlight')?.value"
+              justify="space-between">
+              <ion-label>
+                <h3>highlight</h3>
+                <p>Destacar en el dashboard y en los listados</p>
+              </ion-label>
+            </ion-toggle>
+          </ion-item>
+        </ion-list>
+      </div>
+    </div>
+    <!-- #buttons -->
+    <div class="buttons-section-common button-double custom-buttons-section">
+      <div class="wrapper-buttons">
+        <ion-button class="bt-io size-m txt-sz-m  expand-content custom-button-third">Cancel</ion-button>
+        <ion-button type="submit" class="bt-io size-m txt-sz-m expand-content custom-button-primary">Create Category</ion-button>
+      </div>
+    </div>
+  </form>
+</div>
+<!-- {{formData.value | json}} -->

@@ -85,27 +85,19 @@
   .text-secondary {
     @include mixin.font-standar($color: gray, $fs: 0.8rem);
   }
-  ion-button {
-    --background: #634aff;
-    --border-radius: 10px;
-    &.custom-button-secondary {
-      --color: #634aff;
-      --background: #cfc8ff;
-    }
-  }
-  &.custom-box-empty{
-   height: 16rem;
+  &.custom-box-empty {
+    height: 16rem;
     width: 17rem;
     justify-items: center;
-    margin:auto;
-    font-size:4rem;
+    margin: auto;
+    font-size: 4rem;
   }
-  &.custom-box-noData{
+  &.custom-box-noData {
     background: none;
     height: min-content;
     width: 17rem;
-    margin:auto;
-    font-size:2rem;
+    margin: auto;
+    font-size: 2rem;
     justify-items: center;
     ion-icon {
       background: none;
@@ -113,7 +105,7 @@
       border-radius: 100%;
       padding: 10px;
     }
-    .text-primary{
+    .text-primary {
       color: #bebebe;
     }
   }
@@ -130,8 +122,8 @@ ion-list {
     }
     ion-label {
       @include mixin.font-standar;
-      p{
-        @include mixin.font-standar($fs:0.8rem,$color:gray);
+      p {
+        @include mixin.font-standar($fs: 0.8rem, $color: gray);
       }
     }
   }
@@ -217,6 +209,23 @@ ion-breadcrumbs {
     }
   }
 }
-//box-info-pageEmpty
+//button- custom
+ion-button {
+  --border-radius: 10px;
+  &.custom-button-primary {
+    --background: #634aff;
+    // --border-radius: 10px;
+  }
+
+  &.custom-button-secondary {
+    --color: #634aff;
+    --background: #cfc8ff;
+  }
+  &.custom-button-third {
+    border: 2px solid #634aff;
+    --background: transparent;
+    --color: #634aff;
+  }
+}
 
 //#endregion

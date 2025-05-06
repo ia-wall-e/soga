@@ -17,11 +17,7 @@ export class DatabaseService {
   connectDataBase(dbName: string) {
     this.db = new PouchDB(`${this.baseURL}${dbName}`, this.params);
   }
-  //#update
-  updateDocument(){
-    
-  }
-  // #put
+  //#put
   putDocument(doc: any, params?: any): Promise<any> | undefined {
     if (params) { return this.db?.put(doc, params); } else { return this.db?.put(doc); }
   }
@@ -30,14 +26,11 @@ export class DatabaseService {
     this.db?.post(doc);
   }
   //#get
-  async getDocuments(): Promise<any> {
-    return this.db?.allDocs({ include_docs: true });
-  }
+  // async getDocuments(): Promise<any> {
+  //   return this.db?.allDocs({ include_docs: true });
+  // }
   getDocument(id:string){
     return this.db?.get(id)
-  }
-  getDocsByViews(desigDoc: any) {
-    return this.db?.put(desigDoc)
   }
   getByQuery(patch: string) {
     // console.log(patch)
@@ -56,4 +49,9 @@ export class DatabaseService {
         }
       });
   }
+  //# se utiliza para crear views en coudhDB
+  // getDocsByViews(desigDoc: any) {
+  //   return this.db?.put(desigDoc)
+  // }
+  
 }

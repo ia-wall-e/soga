@@ -22,10 +22,11 @@ export class NewCategoryComponent implements OnInit {
   constructor(private fb: FormBuilder, private categorySvc:CategoriesProductsService) { }
 
   ngOnInit() { }
-  //#
+  //#region
   onSubmit(fm:FormGroup){
     this.categorySvc.putRoot(fm.value)
   }
+  //#endregion
   //#
   toggleStatus(event: any) {
     this.newCategoryFm.patchValue({ status: event.detail.checked });

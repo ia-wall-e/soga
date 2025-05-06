@@ -5,17 +5,17 @@
         <ion-list-header>Categorias</ion-list-header>
         <ion-note></ion-note>
 
-        @for (p of btnApps; track p; let i = $index) {
+        <!-- @for (p of btnApps; track p; let i = $index) {
         <ion-menu-toggle auto-hide="false">
-          <ion-item lines="none" detail="false" (click)="onLoadComponent(p.id_nav)" button>
+          <ion-item lines="none" detail="false" (click)="onNavigation({componentID:p.id_nav})" button>
             <ion-icon aria-hidden="true" slot="start" [ios]="p.icon +'-outline'" [md]="p.icon + '-outline'"></ion-icon>
             <ion-label>{{ p.label }}</ion-label>
           </ion-item>
         </ion-menu-toggle>
-        }
+        } -->
       </ion-list>
     </ion-content>
-    <ion-item lines="none" detail="false" (click)="createDesign()" button>
+    <ion-item lines="none" detail="false"  button>
       <ion-icon aria-hidden="true" slot="start" name="bookmarks-outline"></ion-icon>
       <ion-label>Design</ion-label>
     </ion-item>
@@ -24,18 +24,18 @@
   <div class="ion-page" id="main">
     <ion-header class="header-main">
       <ion-toolbar>
-        <ion-breadcrumbs>
+        <!-- <ion-breadcrumbs>
           @for (p of navHistory; track p) {
-          <ion-breadcrumb (click)="onLoadComponent(p.id, p.data)" *ngIf="p">
-            {{p.id}}
+          <ion-breadcrumb (click)="onNavigation({componentID:p.componentID,data: p.data})" *ngIf="p">
+            {{p.componentID}}
             <ion-icon slot="separator" name="chevron-forward-outline"></ion-icon>
           </ion-breadcrumb>
         }
-        </ion-breadcrumbs>
+        </ion-breadcrumbs> -->
       </ion-toolbar>
     </ion-header>
     <ion-content [fullscreen]="true">
-      <ng-container *ngComponentOutlet="currentComponent"></ng-container>
+      <ng-container #containerComponents></ng-container>
     </ion-content>
   </div>
 </ion-split-pane>

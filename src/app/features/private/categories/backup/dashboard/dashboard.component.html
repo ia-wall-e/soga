@@ -60,18 +60,16 @@
         <app-head title="Categorias Recientes" heading="3"></app-head>
       </div>
       <div class="body-modulo">
-        <ion-list>
-          @for(item of items; track item.id){
+        <ion-list *ngFor="let item of items">
           <ion-item>
-            <ion-icon aria-hidden="true" [name]="item?.value.icon" slot="start"></ion-icon>
+            <ion-icon aria-hidden="true" [name]="item.value.icon" slot="start"></ion-icon>
             <ion-label>{{item.value.label}}</ion-label>
             <ion-label>{{item.value.nodes ? item.value.nodes + 'nodes' : 'no nodes'}} </ion-label>
             <ion-label>{{item.value.status ? 'Active' : 'NoActive'}}</ion-label>
-            <ion-button (click)="onNavigation({componentID:'rootManager', data:item.value})" class="bt-icon fill-clear size-s" slot="end">
+            <ion-button (click)="onNavigation({componentID:'categoryDetails',data:{categoryID :item.value._id,parentLevel:item.value.level}})" class="bt-icon fill-clear size-s" slot="end">
               <ion-icon aria-hidden="true" name="eye-outline"></ion-icon>
             </ion-button>
           </ion-item>
-        }
         </ion-list>
       </div>
     </div>
@@ -96,7 +94,7 @@
       <ion-icon aria-hidden="true" name="alert-circle-outline"></ion-icon>
       <span class="text-primary">Aun No Hay Categorias</span>
       <span class="text-secondary">¿Deseas crear una categoria?</span>
-      <ion-button class="bt-io size-m txt-sz-m expand-content custom-button-primary" (click)="onNavigation({componentID:'createRoot'})">Crear Categoria</ion-button>
+      <ion-button class="bt-io size-m txt-sz-m expand-content" (click)="onNavigation({componentID:'newCategory'})">Crear Categoria</ion-button>
     </div>
   </div>
 </div>

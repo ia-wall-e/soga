@@ -12,7 +12,7 @@ import {  INavigationData } from '../../utils/category-interface';
 })
 export class DashboardComponent implements OnInit {
   @Output() navigationData = new EventEmitter<INavigationData>();
-  items!: any[];
+  items?: any[] | null = null;
   totalRows?: number;
   totalProducts?: number;
   updates?: any[];
@@ -22,9 +22,9 @@ export class DashboardComponent implements OnInit {
     this.fetchData();
   }
   fetchData() {
-    this.categorySvc.getOverview()?.then((r:any) => {
+    this.categorySvc.getOverview()?.then((r: any) => {
       if (r.rows.length > 0) {
-        // console.log(r.rows)
+        // console.log(r)
         this.handlerData(r)
       }
 
@@ -33,9 +33,8 @@ export class DashboardComponent implements OnInit {
     })
   }
   handlerData(data:any){
-    // console.log(data.rows)
-    this.items = data.rows;
-    this.totalRows = data.rows.length;
+    this.items = data.rows.value;
+    this.totalRows = data.total_rows;
     this.totalProducts = data.rows.reduce((total: number, obj: any) => { return total + (Number(obj?.products) || 0), 0 })
   }
   onNavigation(navData:INavigationData) {

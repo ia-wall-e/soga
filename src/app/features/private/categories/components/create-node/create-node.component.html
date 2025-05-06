@@ -1,0 +1,198 @@
+<div class="container pdd-x-2 pdd-y-2 gap-3">
+  <app-head class="title-container" title="Crear Subcategoria" subtitle="Subcategorias"></app-head>
+  <!-- #Breadcrumbs -->
+  <!--// <div class="modulo">
+    <div class="head-modulo">
+      <app-head title="Tree View Hierarchy" heading="3"></app-head>
+    </div>
+    <div class="body-modulo">
+      <ion-breadcrumbs>
+        <ion-breadcrumb href="#home">Home</ion-breadcrumb>
+        <ion-breadcrumb href="#electronics">Electronics</ion-breadcrumb>
+        <ion-breadcrumb href="#cameras">Cameras</ion-breadcrumb>
+        <ion-breadcrumb>Film</ion-breadcrumb>
+        <ion-breadcrumb href="#home">Home</ion-breadcrumb>
+        <ion-breadcrumb href="#electronics">Electronics</ion-breadcrumb>
+        <ion-breadcrumb href="#cameras">Cameras</ion-breadcrumb>
+        <ion-breadcrumb>Film</ion-breadcrumb>
+        <ion-breadcrumb href="#home">Home</ion-breadcrumb>
+        <ion-breadcrumb href="#electronics">Electronics</ion-breadcrumb>
+        <ion-breadcrumb href="#cameras">Cameras</ion-breadcrumb>
+        <ion-breadcrumb>Film</ion-breadcrumb>
+        <ion-breadcrumb href="#home">Home</ion-breadcrumb>
+        <ion-breadcrumb href="#electronics">Electronics</ion-breadcrumb>
+        <ion-breadcrumb href="#cameras">Cameras</ion-breadcrumb>
+        <ion-breadcrumb>Film</ion-breadcrumb>
+      </ion-breadcrumbs>
+    </div>
+  </div> -->
+  <!-- #tree-parents -->
+  <div class="modulo">
+    <div class="head-modulo">
+      <app-head title="Parents Nodes" heading="3"></app-head>
+    </div>
+    <div class="body-modulo">
+      <ion-list>
+        <ion-item>
+          <ion-icon aria-hidden="true" name="bookmark-outline" slot="start"></ion-icon>
+          <ion-label>
+            {{parentNode.level==1? parentNode.label : parentNode.rootLabel}}
+          </ion-label>
+          <ion-label>
+            <p>Parent Root</p>
+          </ion-label>
+          <ion-button class="bt-icon size-s fill-clear" sloe="end">
+            <ion-icon name="settings-outline"></ion-icon>
+          </ion-button>
+        </ion-item>
+        <ion-item>
+          <ion-icon aria-hidden="true" name="git-commit-outline" slot="start"></ion-icon>
+          <ion-label>
+            {{parentNode.level==1? parentNode.label : parentNode.rootLabel}}
+          </ion-label>
+          <ion-label>
+            <p>Parent Node: {{parentNode.level===1 ?  parentNode.level :  parentNode.parentLevel}}</p>
+          </ion-label>
+          <ion-button class="bt-icon size-s fill-clear" sloe="end">
+            <ion-icon name="settings-outline"></ion-icon>
+          </ion-button>
+        </ion-item>
+      </ion-list>
+    </div>
+  </div>
+  <!-- #Form -->
+  <form class="form-io custom-form-io" [formGroup]="formData" (ngSubmit)="onSubmit(formData,parentNode)">
+    <div class="modulo">
+      <div class="head-modulo">
+        <app-head title="Informacion Basica" heading="3"></app-head>
+      </div>
+      <div class="body-modulo">
+        <div class="inputs-group">
+          <div class="wrapper-input">
+            <label class="title">Identificador</label>
+            <div class="input-component fill-solid size-xl  label-static ">
+              <input type="text" formControlName="id">
+            </div>
+          </div>
+          <div class="wrapper-input">
+            <label class="title">Etiqueta Publica</label>
+            <div class="input-component fill-solid size-xl  label-static ">
+              <input type="text" formControlName="label">
+            </div>
+          </div>
+          <!--// <div class="wrapper-input">
+            <label class="title">Parent Category</label>
+            <div class="input-component fill-solid size-xl  label-static ">
+              <ion-select label="" placeholder="Parent">
+                <ion-select-option value="apple">Apple</ion-select-option>
+                <ion-select-option value="banana">Banana</ion-select-option>
+                <ion-select-option value="orange">Orange</ion-select-option>
+              </ion-select>
+            </div>
+          </div> -->
+          <div class="wrapper-input">
+            <label class="title">Descripción</label>
+            <div class="input-component fill-solid">
+              <textarea class="fill-solid" name="comentarios" rows="4" cols="50"
+                formControlName="description"></textarea>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <!-- #category settings -->
+    <div class="modulo">
+      <div class="head-modulo">
+        <app-head title="Category Settings" heading="3"></app-head>
+      </div>
+      <div class="body-modulo">
+        <ion-list lines="none">
+          <!--// <ion-item button>
+            <ion-icon class="icon-primary" aria-hidden="true" name="apps-outline" slot="start"></ion-icon>
+            <ion-label>
+              <h3>Category Icon</h3>
+              <p>Choosen an icon for this category</p>
+            </ion-label>
+            <ion-icon aria-hidden="true" name="pencil-outline" slot="end"></ion-icon>
+          </ion-item> -->
+          <ion-item>
+            <ion-icon class="icon-primary" aria-hidden="true" name="eye-outline" slot="start"></ion-icon>
+            <ion-toggle (ionChange)="toggleStatus($event)" [checked]="formData.get('status')?.value"
+              justify="space-between">
+              <ion-label>
+                <h3>Status Active</h3>
+                <p>La categoría es visible para los usuarios</p>
+              </ion-label></ion-toggle>
+          </ion-item>
+          <ion-item>
+            <ion-icon class="icon-primary" aria-hidden="true" name="reorder-three-outline" slot="start"></ion-icon>
+            <ion-toggle (ionChange)="toggleDisplay($event)" [checked]="formData.get('display')?.value"
+              justify="space-between">
+              <ion-label>
+                <h3>Display</h3>
+                <p>Visualización en el menú de navegación principal</p>
+              </ion-label>
+            </ion-toggle>
+          </ion-item>
+          <ion-item>
+            <ion-icon class="icon-primary" aria-hidden="true" name="star-outline" slot="start"></ion-icon>
+            <ion-toggle (ionChange)="toggleHighlight($event)" [checked]="this.formData.get('highlight')?.value"
+              justify="space-between">
+              <ion-label>
+                <h3>highlight</h3>
+                <p>Destacar en el dashboard y en los listados</p>
+              </ion-label>
+            </ion-toggle>
+          </ion-item>
+          <ion-item>
+            <ion-icon class="icon-primary" aria-hidden="true" name="add-circle-outline" slot="start"></ion-icon>
+            <ion-label>
+              <h3>Attributes</h3>
+              <p>Add attributes to node(subcategory)</p>
+            </ion-label>
+            <ion-toggle [checked]="attributeFlag" (ionChange)="toggleAttributes($event, 'attribute')" slot="end"></ion-toggle>
+          </ion-item>
+        </ion-list>
+      </div>
+    </div>
+    <!-- #attributes -->
+    <div class="modulo custom-modulo-attribute" *ngIf="attributeFlag">
+      <div class="head-modulo">
+        <app-head title="Select Attributes" heading="2"></app-head>
+      </div>
+      <div class="body-modulo">
+        <!-- <app-defined-attributes></app-defined-attributes> -->
+        <div class="segment-section">
+          <ion-segment class="segment expand-full" value="default">
+            <ion-segment-button value="default" content-id="definedAttr">
+              <ion-label> Predefined Attributes</ion-label>
+            </ion-segment-button>
+            <ion-segment-button value="active" content-id="customAttr">
+              <ion-label>Create Attribute</ion-label>
+            </ion-segment-button>
+          </ion-segment>
+        </div>
+        <div class="segment-content">
+          <ion-segment-view>
+            <ion-segment-content
+              id="definedAttr"><app-defined-attributes></app-defined-attributes></ion-segment-content>
+            <ion-segment-content id="customAttr"><app-custom-attributes></app-custom-attributes></ion-segment-content>
+          </ion-segment-view>
+        </div>
+      </div>
+    </div>
+    <!-- #buttons -->
+    <div class="modulo">
+      <div class="body-modulo">
+        <div class="buttons-section-common button-double">
+          <div class="wrapper-buttons">
+            <ion-button class="bt-io fill-outline-primary size-m txt-sz-m  expand-content">Cancel</ion-button>
+            <ion-button type="submit" class="bt-io size-m txt-sz-m expand-content">Agregar Nodo</ion-button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<!-- {{formData.value | json}} -->

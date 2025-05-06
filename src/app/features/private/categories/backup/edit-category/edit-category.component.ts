@@ -1,5 +1,6 @@
-import { Component, CUSTOM_ELEMENTS_SCHEMA, OnInit } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, Input, OnInit } from '@angular/core';
 import { WidgetsModule } from 'src/app/shared/widgets/widgets.module';
+import { ICategoryData } from '../../utils/category-interface';
 
 @Component({
   selector: 'app-edit-category',
@@ -9,9 +10,11 @@ import { WidgetsModule } from 'src/app/shared/widgets/widgets.module';
   schemas:[CUSTOM_ELEMENTS_SCHEMA]
 })
 export class EditCategoryComponent  implements OnInit {
-
+@Input() categoryData!:ICategoryData;
   constructor() { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    console.log(this.categoryData)
+  }
 
 }
