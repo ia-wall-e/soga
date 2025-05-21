@@ -33,7 +33,7 @@
     }
 
     .subtitle {
-      @include mixin.font-standar($color: var(--gray-ii), $fw: 500);
+      @include mixin.font-standar($color: var(--gray-ii), $fw: 500,$fs:0.8rem);
     }
   }
 

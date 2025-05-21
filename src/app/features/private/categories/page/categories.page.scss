@@ -2,46 +2,34 @@
 ion-content {
   background: var(--gray-ii);
 }
-.header-main{
+//#region - head page
+.header-main {
   box-shadow: none;
 }
-// .container {
-//   .modulo-auth {
-//     width: 100%;
-//     max-width: 520px;
-//     // height: fit-content;
-//     display: flex;
-//     flex-direction: column;
-//     align-items: center;
-//     margin: auto;
-//     .body-modulo {
-//       width: 100%;
-//       // max-width: 420px;
-//       display: flex;
-//       flex: 1;
-//       flex-direction: column;
-//       justify-content: center;
-
-//       .head-component {
-//         padding: 0.625rem;
-
-//         .title-section {
-//           width: 100%;
-
-//           .title {
-//             @include mixin.font-title-2($fs: 2rem);
-//           }
-
-//           .subtitle > a {
-//             cursor: pointer;
-//             font-weight: 600;
-//           }
-//         }
-//       }
-//     }
-//   }
-// }
-
+ion-toolbar{
+  // --background: #000;
+}
+.section-breadcrumb {
+  // background: rgb(141, 252, 141);
+  margin: auto;
+  width: 100%;
+  max-width: 779px;
+  ion-breadcrumbs {
+  // background: red;
+  --padding: none;
+  ion-breadcrumb {
+    align-items: center;
+    // background: violet;
+    font-size: 0.85rem;
+    padding: unset;
+    margin: unset;
+    cursor: pointer;
+    --color-active: var(--ion-color-primary);
+    --color-hover: var(--ion-color-primary);
+  }
+}
+}
+//#endregion
 //#region - ion-spin
 //#region - Page
 ion-menu-button {
@@ -74,13 +62,11 @@ ion-menu-button {
 }
 //#endregion
 //#region - ione menu
-ion-menu{
-  width:320px;
-  
+ion-menu {
+  width: 320px;
 }
 ion-menu ion-content {
-  --background: #F0F4F9;
-
+  --background: #f0f4f9;
 }
 
 ion-menu.md ion-content {
@@ -95,20 +81,20 @@ ion-menu.md ion-list {
   padding: 20px 0;
 }
 ion-menu.md ion-list-header {
-  --color:#444746;
-  --font-weight:300;
+  --color: #444746;
+  --font-weight: 300;
 }
-ion-menu.md ion-menu-toggle{
+ion-menu.md ion-menu-toggle {
   background: none;
 }
-ion-menu.md ion-menu-toggle ion-item{
+ion-menu.md ion-menu-toggle ion-item {
   background: none;
-  --background:none;
-  --color:#444746;
- @include mixin.font-standar($color:#7b807e,$fs:1rem);
- ion-icon{
-  --color:#444746;
- }
+  --background: none;
+  --color: #444746;
+  @include mixin.font-standar($color: #7b807e, $fs: 1rem);
+  ion-icon {
+    --color: #444746;
+  }
 }
 ion-menu.md ion-note {
   margin-bottom: 30px;
@@ -214,21 +200,4 @@ ion-item.selected {
   --color: var(--ion-color-primary);
 }
 //#endregion
-//#endregion
-//breadcrumbs
-ion-breadcrumbs {
-  // background: red;
-  ion-breadcrumb {
-    align-items:center;
-    // background: violet;
-    // @include mixin.font-standar($fs:0.85rem);
-    font-size: 0.85rem;
-    padding:unset;
 
-    margin:unset;
-    // --color: rgb(81, 155, 198);
-    cursor:pointer;
-    --color-active: var(--ion-color-primary);
-    --color-hover: var(--ion-color-primary);
-  }
-}

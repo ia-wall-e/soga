@@ -52,7 +52,7 @@
 
 }
 @mixin font-standar($type: "", $color: var(--black-regular), $fs: 0.875rem, $fw: 400) {
-  font-family: var(--mx-button-standar);
+  font-family: var(--font-title-primary);
  
   font-size: $fs;
   font-weight: $fw;

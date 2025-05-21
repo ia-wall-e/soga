@@ -15,7 +15,7 @@
 //#endregion
 //#region Modulo - customs (head-body-footer)
 .modulo {
-  // background: green;
+  // background: rgb(228, 255, 228);
   margin: auto;
   width: 100%;
   max-width: 720px;
@@ -41,6 +41,9 @@
       grid-template-columns: repeat(2, 1fr);
       // margin-top:1.25rem;
       align-items: center;
+    }
+    &.custom-margin-bottom {
+      margin-bottom: 0.625rem;
     }
   }
 }
@@ -135,12 +138,23 @@ ion-list {
   max-width: 720px;
   .inputs-group {
     gap: 1.25rem;
-    .group-wrapper-input {
+    .wrapper-inputs-group {
       &.inline {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
+        display: flex;
+        // grid-template-columns: auto 1fr;
         & > * {
           margin-right: 0.625rem;
+          // flex:1;
+        }
+      }
+      .wrapper-input {
+        &.expand {
+          &-full {
+           flex:1;
+          }
+          &-regular {
+            width: 20%;
+          }
         }
       }
     }

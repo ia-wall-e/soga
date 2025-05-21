@@ -2,6 +2,7 @@ export interface ICategoryModel{
     _id:string,
     label: string,
     type: string,
+    nodeType:NodeType,
     level: number,
     description?: string | null,
     status:boolean,
@@ -20,3 +21,5 @@ export interface ICategoryModel{
     parentLabel :string | null,
     parentLevel:number | null,
 }
+
+export type NodeType = 'root' | 'parent' | 'child' | 'leaf';

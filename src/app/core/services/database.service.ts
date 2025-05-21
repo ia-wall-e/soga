@@ -17,6 +17,26 @@ export class DatabaseService {
   connectDataBase(dbName: string) {
     this.db = new PouchDB(`${this.baseURL}${dbName}`, this.params);
   }
+  //#get
+  getDocument(id: string) {
+    return this.db?.get(id)
+  }
+  getByEndpoint(endpoint: string, options?: PouchDB.Query.Options<any, any>): Promise<any | null> {
+    const db = this.connectionManager(this.db);
+    return db.query(endpoint, options)
+      .then((response: any) => {
+        // console.log(response);
+        return response;
+      })
+      .catch((error: any) => {
+        if (error.statusCode === 404 || error.status === 404) {
+            throw new Error(`El punto de conexion "${endpoint}" esta presentando problemas .`);
+        } else {
+          console.error('Error al consultar la base de datos:', error.message);
+          throw error;
+        }
+      });
+  }
   //#put
   putDocument(doc: any, params?: any): Promise<any> | undefined {
     if (params) { return this.db?.put(doc, params); } else { return this.db?.put(doc); }
@@ -25,33 +45,12 @@ export class DatabaseService {
   postDocument(doc: any) {
     this.db?.post(doc);
   }
-  //#get
-  // async getDocuments(): Promise<any> {
-  //   return this.db?.allDocs({ include_docs: true });
-  // }
-  getDocument(id:string){
-    return this.db?.get(id)
+  //#utils
+  connectionManager(database: any) {
+    if (!database) {
+      return Promise.reject(new Error('La base de datos no está inicializada.'));
+    }
+    return database;
   }
-  getByQuery(patch: string) {
-    // console.log(patch)
-    return this.db?.query(patch, {})
-      .then(response => {
-        return response;
-      })
-      .catch(error => {
-        if (error.statusCode === 404 || error.status === 404) {
-          console.warn('No se encontraron documentos (404)');
-          // return { rows: [] };
-          return null;
-        } else {
-          console.error('Error al consultar CouchDB:', error.message);
-          throw error;
-        }
-      });
-  }
-  //# se utiliza para crear views en coudhDB
-  // getDocsByViews(desigDoc: any) {
-  //   return this.db?.put(desigDoc)
-  // }
-  
+
 }

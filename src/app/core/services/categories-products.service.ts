@@ -1,108 +1,135 @@
 import { Injectable } from '@angular/core';
 import { DatabaseService } from './database.service';
 import { BehaviorSubject } from 'rxjs'
-import { ICategoryModel } from '../interface/category-model';
+import { ICategoryModel, NodeType } from '../interface/category-model';
 import { FormGroup } from '@angular/forms';
-// Alias
-type NodeType = 'root' | 'node';
-//inject
 @Injectable({
   providedIn: 'root'
 })
 export class CategoriesProductsService {
-  private categorySource = new BehaviorSubject<any>(null);
-  categorySource$ = this.categorySource.asObservable();
-
   constructor(private dbSvc: DatabaseService) {
-    this.dbSvc.connectDataBase('categories-products')
+    this.dbSvc.connectDataBase('categories-products-staging')
   }
-  //#
-  createNode(nodeType: NodeType, formData: any, parentData?:ICategoryModel) {
-    console.log(formData)
-    const doc = this.builderCategoryModel(nodeType, formData);
+  //#region - CRUD
+  createNode(formData: any, parentNode?: ICategoryModel | null) {
+    const doc: ICategoryModel = this.builderCategoryModel(formData, parentNode);
+    // console.log(doc)
     this.saveNode(doc);
   }
-  getNode(id:string){
+  getNode(id: string) {
     return this.dbSvc.getDocument(id)
   }
-  getNodes(id: any) {
-    return this.dbSvc.getByQuery(`categorias/nodos?key="${id}"`)?.then((r) => {
-      return r?.rows
-    })
-  }
   getOverview() {
-    return this.dbSvc.getByQuery('categorias/overview?descending=true&limit=10')?.then((x: any) => { return x }).catch((e: any) => console.log(e))
+    const path = 'categorias/overview';
+    const options = {
+      descending: true,
+      limit: 10,
+      include_docs: false
+    }
+    return this.getNodes(path, options)
   }
-  //# constructor Modelo y Validaciones
-  builderCategoryModel(nodeType: NodeType, data: any): ICategoryModel {
-    // console.log(data);
-    if (data instanceof FormGroup) {
-      const validate = this.validationsCategoryData(data.value);
-      if (!validate.status) throw new Error(`ERROR: ${validate.message}`);
-      const categoryData = this.createObjetModel(nodeType,data.value);
-      console.log(categoryData)
-      return categoryData;
+  getChildrenNodes(categoryID: string) {
+    const path = 'categorias/nodos';
+    const options = {
+      key: categoryID,
+    }
+    return this.getNodes(path, options)
+  }
+  //#endregion
+  //#region - METODOS DATA BASE
+  private getNodes(endpoint: string, options?: any) {
+    return this.dbSvc.getByEndpoint(endpoint, options)?.then((r: any) => {
+      return this.handlerResponse(r)
+    }).catch((e: any) => { throw e; });
+  }
+  private saveNode(doc: ICategoryModel) {
+    this.dbSvc.putDocument(doc);
+  }
+  private handlerResponse(r: any) {
+    // console.log(r.rows);
+    return r.rows;
+  }
+  //#endregion
+  //#region - CONSTRUCTOR OBJECTO MODEL CATEGORY
+  builderCategoryModel(form: any, parentNode?: ICategoryModel | null): ICategoryModel {
+    if (form instanceof FormGroup) {
+      // 1.valdacion del formulario
+      const validation = this.validationCategoryData(form.value)
+      if (!validation.status) throw new Error(`ERROR: ${validation.message}`);
+      // 2.crear objeto CategoryModel
+      const categoryObj = this.createObjetModel(form, parentNode);
+      // console.log(categoryObj)
+      return categoryObj;
     }
     throw new Error('El parámetro data no es una instancia de FormGroup');
   }
-  private createObjetModel(nodeType:NodeType,categoryData:any):ICategoryModel{
+  createObjetModel(formData: FormGroup, parentNode?: ICategoryModel | null): ICategoryModel {
     const date = new Date().toISOString();
-    const update = { _id: categoryData.label, date: date, type: 'create', user: 'admin-1233', info: null };
-     // Declaración común
-     let nodes_: number | null = null;
-     let categoryID_: string;
-     let nodeLevel_: number;
-     let rootID_: string | null = null;
-     let rootLabel_: string | null = null;
-     let parentID_: string | null = null;
-     let parentLabel_: string | null = null;
-     let parentLevel_: number | null = null;
-     /**Declaracion por tipo de node*/
-     if (nodeType === 'root') {
-       categoryID_ = `root:${categoryData.label}`;
-       nodeLevel_ = 1;
-       nodes_ = 0;
-     } else if (nodeType === 'node') {
-       rootID_ = categoryData.rootID;
-       rootLabel_=categoryData.rootLabel
-       parentID_ = categoryData.parentID;
-       parentLabel_=categoryData.parentLabel
-       parentLevel_ = categoryData.parentLevel;
-       categoryID_ = `node:${categoryData.id}`;
-       nodeLevel_ = categoryData.parentLevel + 1;
-       nodes_ = 0;
-     } else {
-       throw new Error('Tipo de nodo inválido');
-     }
-     /**constructor Model*/
-    const doc = {
-       _id: categoryID_,
-       label: categoryData.label,
-       type: 'category',
-       level: nodeLevel_,
-       status: categoryData.status,
-       display: categoryData.display,
-       description: categoryData.description,
-       highlight: categoryData.highlight,
-       nodes: nodes_,
-       icon: categoryData.icon,
-       products: 0,
-       metadata: {
-         createDate: update,
-         lastUpdate: update,
-       },
-       rootID: rootID_,
-       rootLabel:rootLabel_,
-       parentID: parentID_,
-       parentLabel:parentLabel_,
-       parentLevel: parentLevel_,
-     }
-     return doc;
+    const node = formData.value;
+    const update = { _id: node.label, date: date, type: 'create', user: 'admin-1233', info: null };
+    // Declaración común
+    let nodes_: number | null = 0;
+    let categoryID_: string = `${node.nodeType}:${node.label}`;
+    let level_: number;
+    let rootID_: string | null = null;
+    let rootLabel_: string | null = null;
+    let parentID_: string | null = null;
+    let parentLabel_: string | null = null;
+    let parentLevel_: number | null = null;
+    let icon_: string | null = null;
+    let description_: string | null = null;
+    if (node.nodeType === 'root') {
+      level_ = 1;
+    } else {
+      if (!parentNode) throw new Error('Se presento un problema al crear esta subcategoria');
+      level_ = parentNode.level + 1;
+      if (parentNode.level == 1) {
+        rootID_ = parentNode.rootID;
+        rootLabel_ = parentNode.rootLabel;
+        parentID_ = parentNode.parentID;
+        parentLabel_ = parentNode.parentLabel;
+        parentLevel_ = parentNode.parentLevel;
+      } else {
+        rootID_ = parentNode.rootID;
+        rootLabel_ = parentNode.rootLabel;
+        parentID_ = parentNode.parentID;
+        parentLabel_ = parentNode.parentLabel;
+        parentLevel_ = parentNode.parentLevel;
+      }
+
+    }
+    /**constructor Model*/
+    const doc: ICategoryModel = {
+      _id: categoryID_,
+      label: node.label,
+
+      type: 'category',
+      nodeType: node.nodeType,
+      level: level_,
+      status: node.status,
+      display: node.display,
+      description: description_,
+      highlight: node.highlight,
+      nodes: nodes_,
+      icon: icon_,
+      products: 0,
+      metadata: {
+        createDate: update,
+        lastUpdate: update,
+      },
+      rootID: rootID_,
+      rootLabel: rootLabel_,
+      parentID: parentID_,
+      parentLabel: parentLabel_,
+      parentLevel: parentLevel_,
+    }
+    // console.log(doc);
+    return doc;
   }
-  validationsCategoryData(categoryData: any): { status: boolean, message?: string } {
+  validationCategoryData(categoryData: any): { status: boolean, message?: string } {
     const result = {
       status: true,
-      message: 'valida'
+      message: 'Categoria Valida'
     };
     /**Validations */
     if (!categoryData) {
@@ -124,68 +151,18 @@ export class CategoriesProductsService {
       //   return result;
       // }
     }
-    // console.log(result);
-    return result;
-  }
-  //# DB
-  private saveNode(doc: ICategoryModel) {
-    this.dbSvc.putDocument(doc);
-  }
-  //#handlers
-  private handlerResponse(){}
-  //#design - queries couchDB
-  // createQuery(desigDoc: any) {
-  //   this.dbSvc.getDocsByViews(desigDoc)
-  //     ?.then(r => console.log(r))
-  //     .catch(e => console.log(e))
-  // }
-}
-/** OLD
- *
+    return result
 
   }
-  getRoot(id: any) {
-    return this.dbSvc.getDocument(id)
+  // #endregion
+  //#region - UTILS
+  identifyNode(category: ICategoryModel): NodeType {
+    if (category.level === 1) return 'root';
+    if (category.level != 1) return 'child';
+    throw new Error('No se ha identificado el tipo de nodo')
   }
-  getNodes(id: any) {
-    return this.dbSvc.getByQuery(`categorias/nodos?key="${id}"`)?.then((r) => {
-      // console.log(r);
-      return r?.rows
-    })
+  createView(desigDoc: any) {
+    this.dbSvc.putDocument(desigDoc)
   }
-  getOverview() {
-    return this.dbSvc.getByQuery('categorias/overview?descending=true&limit=10')?.then((x: any) => { return x }).catch((e: any) => console.log(e))
-  }
-      builderCategoryModel(nodetype: string, data: any) {
-    // console.log(data)
-    if (data instanceof FormGroup) {
-      if (!data.value) throw new Error("Ingresa una categoria");
-     const validate = this.validationsCategoryData(data.value);
-     console.log(validate)
-    }
-    // const date = new Date().toISOString();
-    // const update = { _id: data.name, date: date, type: 'create', user: 'admin-1233', info: null };
-    // const categoryData: ICategoryModel = {
-    //   _id: `root:${data.name}`,
-    //   // categoryID:  `root:${data.name}`,
-    //   label: data.name,
-    //   type: 'category',
-    //   level: 1,
-    //   rootID: null,
-    //   parentID: null,
-    //   parentLevel: null,
-    //   nodes: 0,
-    //   status: data.status,
-    //   display: data.display,
-    //   description: data.description || null,
-    //   products: 0,
-    //   icon: data.icon,
-    //   highlight: data.highlight,
-    //   metadata: {
-    //     createDate: update,
-    //     lastUpdate: update,
-    //   }
-    // }
-    // return categoryData
-  }
- */
+  // #endregion
+}

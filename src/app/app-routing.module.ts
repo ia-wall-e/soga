@@ -13,7 +13,7 @@ const routes: Routes = [
   },
   {
     path: 'nuevo-producto/:id',
-    loadChildren: () => import('./features/private/new-product/new-product.module').then( m => m.NewProductPageModule)
+    loadChildren: () => import('./features/private/products/new-product/new-product.module').then( m => m.NewProductPageModule)
   },
   {
     path: 'categorias',

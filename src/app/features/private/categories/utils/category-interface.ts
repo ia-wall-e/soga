@@ -7,7 +7,9 @@ import { ICategoryModel } from "src/app/core/interface/category-model";
 //     parentLevel?: number;
 //     rootID:string
 // } 
-export interface INavigationData{
+export interface INavigationData {
     componentID: string,
-    data?:ICategoryModel | null
+    categoryData?: ICategoryModel ,
+    categoryID?: string 
+
 }
