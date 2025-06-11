@@ -2,12 +2,12 @@ import { Component, CUSTOM_ELEMENTS_SCHEMA, EventEmitter, OnInit, Output } from 
 import { CategoriesProductsService } from 'src/app/core/services/categories-products.service';
 import { WidgetsModule } from 'src/app/shared/widgets/widgets.module';
 import { CommonModule } from '@angular/common';
-import { INavigationData } from '../../utils/category-interface';
+import { INavigationData } from '../../../utils/category-interface';
 import { ICategoryModel } from 'src/app/core/interface/category-model';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.scss', '../components-commons.scss'],
+  styleUrls: ['./dashboard.component.scss', '../../components-commons.scss'],
   imports: [CommonModule, WidgetsModule],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
@@ -22,11 +22,11 @@ export class DashboardComponent implements OnInit {
   ngOnInit() {
     this.fetchData();
   }
-fetchData() {
+  fetchData() {
     this.categorySvc.getOverview()?.then((r: any) => {
-      if(!r){throw new Error ("Problemas con la base de datos")};
-      if (r.length > 0){this.handlerData(r)};
-    }).catch((e: any) => {console.error(e)})
+      if (!r) { throw new Error("Problemas con la base de datos") };
+      if (r.length > 0) { this.handlerData(r) };
+    }).catch((e: any) => { console.error(e) })
   }
   handlerData(data: any) {
     // console.log(data)

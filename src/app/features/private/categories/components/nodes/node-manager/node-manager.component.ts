@@ -1,14 +1,14 @@
 import { Component, CUSTOM_ELEMENTS_SCHEMA, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ICategoryModel, NodeType } from 'src/app/core/interface/category-model';
 import { WidgetsModule } from 'src/app/shared/widgets/widgets.module';
-import { INavigationData } from '../../utils/category-interface';
+import { INavigationData } from '../../../utils/category-interface';
 import { CommonModule } from '@angular/common';
 import { CategoriesProductsService } from 'src/app/core/services/categories-products.service';
 
 @Component({
   selector: 'app-node-manager',
   templateUrl: './node-manager.component.html',
-  styleUrls: ['./node-manager.component.scss', '../components-commons.scss'],
+  styleUrls: ['./node-manager.component.scss', '../../components-commons.scss'],
   imports: [WidgetsModule, CommonModule],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
@@ -25,27 +25,29 @@ export class NodeManagerComponent implements OnInit {
     // console.log(this.navigationData);y
     this.initComponent(this.navigationData);
   }
-  initComponent(navData:INavigationData) {
+  initComponent(navData: INavigationData) {
     try {
       if (navData.categoryData) {
         const category = navData.categoryData;
-        this.nodeType = this.categorySvc.identifyNode(category);
+        // this.nodeType = this.categorySvc.identifyNode(category);
         this.node = category;
+        this.nodeType= category.nodeType;
         this.getChildNodes(category._id);
-      } else if (navData.categoryID) {
-        const categoryID = navData.categoryID;
+      } else if(navData.categoryID){
+        // if(navData.categoryID){throw new Error('No existe la cateogria o se ha presentado un problema')}
+        const categoryID:string = navData.categoryID;
         this.categorySvc.getNode(categoryID)?.then((r: any) => {
           console.log(r);
           this.node = r;
         })
-        this.nodeType = this.categorySvc.identifyNode(this.node as ICategoryModel);
-        console.log(this.nodeType)
+        // this.nodeType = this.categorySvc.identifyNode(this.node as ICategoryModel);
+        // console.log(this.nodeType)
         this.getChildNodes(categoryID);
       }
 
-    //   // console.log(typeof this.navigationData);
-    //   // console.log(this.navigationData);
-    //   // console.log(this.nodeType);
+      //   // console.log(typeof this.navigationData);
+      //   // console.log(this.navigationData);
+      //   // console.log(this.nodeType);
     } catch (e) {
       console.error(e)
     }

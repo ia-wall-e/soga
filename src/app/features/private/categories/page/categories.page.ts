@@ -1,13 +1,17 @@
 import { AfterViewInit,OnInit, Component, ViewChild, ViewContainerRef, ComponentRef } from '@angular/core';
 /* */
-import { DashboardComponent } from '../components/dashboard/dashboard.component';
-import { NodeManagerComponent } from '../components/node-manager/node-manager.component';
-import { CreateNodeComponent } from '../components/create-node/create-node.component';
+import { DashboardComponent } from '../components/nodes/dashboard/dashboard.component';
+import { NodeManagerComponent } from '../components/nodes/node-manager/node-manager.component';
+import { CreateNodeComponent } from '../components/nodes/create-node/create-node.component';
+import { AttributeNodeComponent } from '../components/nodes/attribute-node/attribute-node.component';
+/* */
+import { DashboardAttributesComponent } from '../components/attributes/dashboard-attributes/dashboard-attributes.component';
 /* */
 import { take } from 'rxjs';
 import { INavigationData } from '../utils/category-interface';
 // import { EditNodeComponent } from '../components/edit-node/edit-node.component';
 import { CategoriesProductsService } from 'src/app/core/services/categories-products.service';
+import { AttributeManagerComponent } from '../components/attributes/attribute-manager/attribute-manager.component';
 
 
 @Component({
@@ -23,13 +27,16 @@ export class CategoriesPage implements OnInit, AfterViewInit {
     ['dashboard', DashboardComponent],
     ['nodeManager', NodeManagerComponent],
     ['createNode', CreateNodeComponent],
-    // ['editNode', EditNodeComponent],
+    ['nodeAttribute',AttributeNodeComponent],
+    ['dashboardAttr', DashboardAttributesComponent],
+    ['attrManager', AttributeManagerComponent]
   ]);
   // Estado de la navegación
   private currentComponentRef?: ComponentRef<any>;
   public navHistory: INavigationData[] = [];
   public appPage = [
-    { label: 'Panel', componentId: 'dashboard', type: 'parent', icon: 'grid', visible: true },
+    { label: 'Gestor De Categorias', componentId: 'dashboard', type: 'parent', icon: 'grid', visible: true },
+    { label: 'Gestor De Atributos', componentId: 'dashboardAttr', type: 'parent', icon: '', visible: true },
     { label: 'Detalles Genérico', componentId: 'nodeManager', type: 'child', icon: 'add-circle', visible: false },
     { label: 'Crear Subcategoría', componentId: 'createNode', type: 'child', icon: 'add-circle', visible: false },
     { label: 'Editar Categoría', componentId: 'editNode', type: 'child', icon: 'add-circle', visible: false },
@@ -75,6 +82,7 @@ export class CategoriesPage implements OnInit, AfterViewInit {
   }
   /** Recibe eventos de los subcomponentes */
   public onNavigation(navData: INavigationData): void {
+    console.log(navData)
     this.loadComponent(navData);
   }
   /** Añade o recorta el historial según el tipo de nave­gación */

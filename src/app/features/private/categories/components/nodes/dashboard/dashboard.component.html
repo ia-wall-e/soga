@@ -1,6 +1,6 @@
 <div class="container pdd-x-2 pdd-y-2 gap-3">
   <ng-container *ngIf="items; else available">
-    <app-head class="title-container" title="Panel" heading="2"></app-head>
+    <app-head class="title-container" title="Categorias" heading="2"></app-head>
     <!-- #region - Head -->
     <div class="modulo">
       <div class="body-modulo custom-search-button">
@@ -66,7 +66,7 @@
         <ion-list lines="none">
           @for(item of items; track item.id){
           <ion-item (click)="onNavigation({componentID: 'nodeManager',categoryData: item.value})" button>
-            <ion-icon class="icon-primary" aria-hidden="true" name="git-commit-outline" slot="start"></ion-icon>
+            <ion-icon class="icon-primary" aria-hidden="true" [name]="item.value.icon" slot="start"></ion-icon>
             <ion-label>
               <h3>{{ item?.value.label }}</h3>
               <p>

@@ -2,11 +2,13 @@
 //#region Container
 .container {
   // &.custom-container-center {
-  //   // background: #000;
+    background: #cecece;
   //   position: relative;
-  //   height: calc(100vh - 4rem);
+    // height: calc(100vh - 4rem);
+    min-height:100vh;
   // }
 }
+
 .title-container {
   margin: auto;
   width: 100%;
@@ -15,10 +17,13 @@
 //#endregion
 //#region Modulo - customs (head-body-footer)
 .modulo {
-  // background: rgb(228, 255, 228);
+  background: rgb(255, 255, 255);
   margin: auto;
   width: 100%;
   max-width: 720px;
+  padding:0.625rem 1.25rem;
+  border-radius:15px;
+  min-height:80%;
   &.custom-modulo-center {
     // background: red;
     position: absolute;

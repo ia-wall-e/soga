@@ -1,5 +1,6 @@
 <div class="container pdd-x-2 pdd-y-2 gap-3">
-  <app-head class="title-container" title="{{nodeType=='root'? 'Crear Categoria' : 'Crear Subcategoria'}}" heading="2"></app-head>
+  <app-head class="title-container" title="{{nodeType=='root'? 'Crear Categoria' : 'Crear Subcategoria'}}"
+    heading="2"></app-head>
   <form class="form-io custom-form-io" [formGroup]="formData" (ngSubmit)="onSubmit(formData)">
     <!-- #region - Info parents ONLY CHILD -->
     <div class="modulo" *ngIf="nodeType!='root'">
@@ -11,16 +12,16 @@
           <ion-item>
             <ion-icon aria-hidden="true" name="bookmark-outline" slot="start"></ion-icon>
             <ion-label>
-              {{ rootNode?.label}}
+              {{parentNode?.nodeType=='root'? parentNode?.label : parentNode?.rootLabel }}
             </ion-label>
             <ion-label>
-              <p>Root Node</p>
+              <p>{{parentNode?.nodeType=='root'? 'Root Node - Parent node' : 'Root Node'}}</p>
             </ion-label>
             <ion-button class="bt-icon size-s fill-clear" sloe="end">
               <ion-icon name="settings-outline"></ion-icon>
             </ion-button>
           </ion-item>
-          <ion-item>
+          <ion-item *ngIf="parentNode?.nodeType!= 'root'">
             <ion-icon aria-hidden="true" name="git-commit-outline" slot="start"></ion-icon>
             <ion-label>
               {{ parentNode?.label}}
@@ -43,7 +44,7 @@
       </div>
       <div class="body-modulo">
         <div class="inputs-group">
-          <div class="wrapper-inputs-group inline" >
+          <div class="wrapper-inputs-group inline">
             <div class="wrapper-input expand-regular" *ngIf="nodeType!='root'">
               <label class="title">Tipo de Nodo</label>
               <div class="input-component fill-solid size-xl  label-static ">

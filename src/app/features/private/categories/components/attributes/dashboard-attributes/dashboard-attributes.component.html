@@ -1,0 +1,47 @@
+<div class="container pdd-x-2 pdd-y-2 gap-3" >
+  <ng-container *ngIf="items; else available">
+    <!-- <app-head class="title-container" title="Atributos" subtitle="Gestiona los atributos de cada categoria" heading="2"></app-head> -->
+
+    <!-- #region - Category overview -->
+    <div class="modulo">
+      <div class="head-modulo">
+           <app-head class="title-container" title="Atributos" subtitle="Gestiona los atributos de cada categoria" heading="2"></app-head>
+        <!-- <app-head title="Categorias Recientes" heading="3"></app-head> -->
+      </div>
+      <div class="body-modulo">
+        <ion-list lines="none">
+          @for(item of items; track item.id){
+          <ion-item (click)="onNavigation({componentID: 'attrManager',categoryData: item.value})" button>
+            <ion-icon class="icon-primary" aria-hidden="true" [name]="item.value.icon" slot="start"></ion-icon>
+            <ion-label>
+              <h3>{{ item?.value.label }}</h3>
+              <p>
+                Nivel: {{ item?.value.level }}
+              </p>
+            </ion-label>
+            <ion-button class="bt-icon size-m fill-clear">
+              <ion-icon name="chevron-forward-outline"></ion-icon>
+            </ion-button>
+          </ion-item>
+          }
+        </ion-list>
+      </div>
+    </div>
+    <!-- #endregion -->
+  </ng-container>
+</div>
+<!-- #region - no data TEMPLATE -->
+<ng-template #available>
+  <div class="modulo custom-modulo-center">
+    <div class="body-modulo">
+      <div class="box-overview-component custom-box-empty">
+        <ion-icon aria-hidden="true" name="alert-circle-outline"></ion-icon>
+        <span class="text-primary">Aun No Hay Categorias</span>
+        <span class="text-secondary">¿Deseas crear una categoria?</span>
+        <ion-button class="bt-io size-m txt-sz-m expand-content custom-button-primary"
+          (click)="onNavigation({componentID:'createNode'})">Crear Categoria</ion-button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+<!-- #endregion -->

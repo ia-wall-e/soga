@@ -5,12 +5,12 @@ import { WidgetsModule } from 'src/app/shared/widgets/widgets.module';
 import { NavigationData } from 'src/app/shared/utils/services/navigation.service';
 import { ICategoryModel, NodeType } from 'src/app/core/interface/category-model';
 import { CategoriesProductsService } from 'src/app/core/services/categories-products.service';
-import { INavigationData } from '../../utils/category-interface';
+import { INavigationData } from '../../../utils/category-interface';
 
 @Component({
   selector: 'app-create-node',
   templateUrl: './create-node.component.html',
-  styleUrls: ['./create-node.component.scss', '../components-commons.scss'],
+  styleUrls: ['./create-node.component.scss', '../../components-commons.scss'],
   imports: [
     ReactiveFormsModule,
     WidgetsModule,
@@ -19,11 +19,11 @@ import { INavigationData } from '../../utils/category-interface';
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class CreateNodeComponent implements OnInit {
-  @Input() navigationData!: any;
+  @Input() navigationData!: INavigationData;
   @Output() responseComponent = new EventEmitter<any>();
   rootNode: ICategoryModel | null = null;
   parentNode: ICategoryModel | null = null;
-  nodeType!: NodeType;
+  nodeType: NodeType = "child";
   attributeFlag?: boolean;
   //*Form
   formData = this.fb.group({
@@ -33,23 +33,25 @@ export class CreateNodeComponent implements OnInit {
     description: this.fb.control(''),
     status: this.fb.control(true),
     attributes: this.fb.control(false),
-    icon: this.fb.control(''),
+    icon: this.fb.control(null),
     display: this.fb.control(true),
     highlight: this.fb.control(true),
-    rootID: this.fb.control(''),
-    rootLabel: this.fb.control(''),
-    parentID: this.fb.control(''),
-    parentLabel: this.fb.control(''),
+    rootID: this.fb.control(null),
+    rootLabel: this.fb.control(null),
+    parentID: this.fb.control(null),
+    parentLabel: this.fb.control(null),
     parentLevel: this.fb.control(0),
   })
   constructor(private fb: FormBuilder, private categorySvc: CategoriesProductsService) { }
   ngOnInit() {
+    // console.log(this.navigationData);
     this.initComponent(this.navigationData)
   }
   initComponent(navData: INavigationData) {
     if (navData.categoryData) {
-      this.nodeType = 'child';
-      this.parentNode = navData?.categoryData
+      // this.nodeType = 'child';
+      this.parentNode = navData?.categoryData;
+      // console.log(this.parentNode);
     } else {
       this.nodeType = 'root';
     };
@@ -57,13 +59,29 @@ export class CreateNodeComponent implements OnInit {
 
   }
   onSubmit(form: FormGroup) {
+    // console.log(form.value)
+    // console.log(this.nodeType);
+    this.categorySvc.createCategoryModel(form, this.parentNode)
     try {
-      this.categorySvc.createNode(form, this.parentNode)
+      this.categorySvc.createNode(form, this.parentNode)?.then(r => {
+        if (r.ok == true) {
+          this.reDirection();
+        }
+      }).catch(e => { console.log(e) });
     } catch (e) {
-
+      console.error(e);
     }
   }
-  onNavigation(navData: NavigationData) {
+  private async reDirection(): Promise<void> {
+    this.navigationData.componentID = "nodeManager";
+    const nodeID = this.formData.value.id as string;
+    const nodeType = this.formData.value.nodeType as string;
+    this.navigationData.categoryID = `${nodeType}:${nodeID}`;
+    // console.log(this.navigationData.categoryID);
+    this.navigationData.categoryData = await this.categorySvc.getNode(this.navigationData.categoryID)?.then();
+    this.onNavigation(this.navigationData);
+  }
+  onNavigation(navData: INavigationData) {
     this.responseComponent.emit(navData)
   }
   handlerOption(e: any, type: string) {
